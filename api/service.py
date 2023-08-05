@@ -15,7 +15,7 @@ def represent(img_path, model_name, detector_backend, enforce_detection, align):
 
 
 def verify(
-    img1_path, img2_path, model_name, detector_backend, distance_metric, enforce_detection, align
+        img1_path, img2_path, model_name, detector_backend, distance_metric, enforce_detection, align
 ):
     obj = DeepFace.verify(
         img1_path=img1_path,
@@ -40,3 +40,12 @@ def analyze(img_path, actions, detector_backend, enforce_detection, align):
     )
     result["results"] = demographies
     return result
+
+
+def recognition(img_path, db_path, detector_backend):
+    obj = DeepFace.find(
+        img_path=img_path,
+        db_path=db_path,
+        detector_backend=detector_backend
+    )
+    return obj

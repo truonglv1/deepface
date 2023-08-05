@@ -1,3 +1,5 @@
+import json
+
 from flask import Blueprint, request
 import service
 
@@ -98,3 +100,30 @@ def analyze():
     )
 
     return demographies
+
+
+@blueprint.route("/recognition", methods=["POST"])
+def recognition():
+    input_args = request.get_json()
+
+    if input_args is None:
+        return {"message": "empty input set passed"}
+
+    img_path = input_args.get("img_path")
+
+    if img_path is None:
+        return {"message": "you must pass img_path input"}
+
+
+    detector_backend = input_args.get("detector_backend", "opencv")
+    db_path = input_args.get("db_path", "D:/gap/code/deepface/data")
+    results = service.recognition(
+        img_path=img_path,
+        db_path=db_path,
+        detector_backend=detector_backend,
+    )[-1]
+
+    results_res = results.to_json(orient='records')
+
+    #list to json array
+    return str(results_res)
