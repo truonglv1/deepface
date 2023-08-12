@@ -1,7 +1,8 @@
 import json
 
-from flask import Blueprint, request
+from flask import Blueprint, request, send_file
 import service
+import os
 
 blueprint = Blueprint("routes", __name__)
 
@@ -114,16 +115,29 @@ def recognition():
     if img_path is None:
         return {"message": "you must pass img_path input"}
 
+    # detector_backend = input_args.get("detector_backend", "opencv")
 
-    detector_backend = input_args.get("detector_backend", "opencv")
-    db_path = input_args.get("db_path", "D:/gap/code/deepface/data")
+    db_path = input_args.get("db_path", "../static/image")
+
     results = service.recognition(
         img_path=img_path,
         db_path=db_path,
-        detector_backend=detector_backend,
-    )[-1]
+        detector_backend="retinaface",
+    )[0].sort_values('VGG-Face_cosine', ascending=True)
 
     results_res = results.to_json(orient='records')
 
-    #list to json array
     return str(results_res)
+
+
+@blueprint.route("/static/image/<path:file_name>", methods=["GET"])
+def get_image(file_name):
+
+    absolute_path = os.path.abspath("../static/image")
+    image_path = os.path.join(absolute_path, file_name)
+    image_path_res = image_path.replace('\\', '/')
+
+    if os.path.exists(image_path_res):
+        return send_file(image_path_res, mimetype='image/jpeg')
+    else:
+        return "Image not found"

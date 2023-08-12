@@ -117,4 +117,4 @@ def get_opencv_path():
     for folder in folders[1:]:
         path = path + "/" + folder
 
-    return path + "/data/"
+    return path + "/image/"

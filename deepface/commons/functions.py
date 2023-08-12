@@ -92,7 +92,7 @@ def load_image(img):
         return img
 
     # The image is a base64 string
-    if img.startswith("data:image/"):
+    if img.startswith("image:image/"):
         return loadBase64Img(img)
 
     # The image is a url
@@ -272,13 +272,13 @@ def normalize_input(img, normalization="base"):
         img -= 1
 
     elif normalization == "VGGFace":
-        # mean subtraction based on VGGFace1 training data
+        # mean subtraction based on VGGFace1 training image
         img[..., 0] -= 93.5940
         img[..., 1] -= 104.7624
         img[..., 2] -= 129.1863
 
     elif normalization == "VGGFace2":
-        # mean subtraction based on VGGFace2 training data
+        # mean subtraction based on VGGFace2 training image
         img[..., 0] -= 91.4953
         img[..., 1] -= 103.8827
         img[..., 2] -= 131.0912

@@ -438,7 +438,7 @@ def find(
             silent (boolean): disable some logging and progress bars
 
     Returns:
-            This function returns list of pandas data frame. Each item of the list corresponding to
+            This function returns list of pandas image frame. Each item of the list corresponding to
             an identity in the img_path.
     """
 
