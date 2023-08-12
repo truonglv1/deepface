@@ -46,6 +46,7 @@ def recognition(img_path, db_path, detector_backend):
     obj = DeepFace.find(
         img_path=img_path,
         db_path=db_path,
-        detector_backend=detector_backend
+        detector_backend=detector_backend,
+        model_name="Facenet"
     )
     return obj

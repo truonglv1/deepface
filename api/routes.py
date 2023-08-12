@@ -123,7 +123,7 @@ def recognition():
         img_path=img_path,
         db_path=db_path,
         detector_backend="retinaface",
-    )[0].sort_values('VGG-Face_cosine', ascending=True)
+    )[0].sort_values('Facenet_cosine', ascending=True)
 
     results_res = results.to_json(orient='records')
 
